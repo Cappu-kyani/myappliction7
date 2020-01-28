@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
 public class Calculator {
-   public Float operant1;
-   public Float operant2;
+   public Double operant1;
+   public Double operant2;
+   public String operation;
 
 }
+
