@@ -58,7 +58,8 @@
         android:layout_height="wrap_content"
         android:text="/"
         android:id="@+id/_13"/>
-     </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -129,5 +130,11 @@
             android:text="*" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="C" />
 
 </LinearLayout>

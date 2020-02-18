@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button12 = findViewById(R.id._12);
         button13 = findViewById(R.id._13);
         button14 = findViewById(R.id._14);
+        button15 = findViewById(R.id._clear);
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
         button3.setOnClickListener(this);
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button12.setOnClickListener(this);
         button13.setOnClickListener(this);
         button14.setOnClickListener(this);
+        button15.setOnClickListener(this);
         calculator = new Calculator();
         et = findViewById(R.id.ed);
         tv = findViewById(R.id.tv);
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button button12;
     Button button13;
     Button button14;
+    Button button15;
     Calculator calculator;
     EditText et;
     TextView tv;
@@ -74,33 +77,138 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         String s = ((Button)v).getText().toString();
         String editText = et.getText().toString();
+        if(((Button)v).getText().toString().equals("C"))
+        {
+            tv.setText("");
+            calculator.operation =null;
+            calculator.operant1 = null;
+            calculator.operant2 = null;
+            et.setText("");
+        }
         if(((Button)v).getText().toString().equals("+"))
         {
          if (calculator.operant1 == null)
          {
+            if (editText.equals(""))
+            {
+                return;
+            }
           Double op1 = Double.valueOf(editText);
+
           calculator.operant1 = op1;
           calculator.operation = s;
+          et.setText("");
          }
          else
          {
              Double op2 = Double.valueOf(editText);
              calculator.operant2 = op2;
                      calculator.operation = s;
+                     String result = calculator.plus();
+                     tv.setText(result);
+
          }
+
         }
+
+        if(((Button)v).getText().toString().equals("-"))
+        {
+            if (calculator.operant1 == null)
+            {
+                if (editText.equals(""))
+                {
+                    return;
+                }
+                Double op1 = Double.valueOf(editText);
+                calculator.operant1 = op1;
+                calculator.operation = s;
+                et.setText("");
+            }
+            else
+            {
+                Double op2 = Double.valueOf(editText);
+                calculator.operant2 = op2;
+                calculator.operation = s;
+                String result = calculator.minus();
+                tv.setText(result);
+
+            }
+
+        }
+        if(((Button)v).getText().toString().equals("*"))
+        {
+            if (calculator.operant1 == null)
+            {
+                if (editText.equals(""))
+                {
+                    return;
+                }
+                Double op1 = Double.valueOf(editText);
+                calculator.operant1 = op1;
+                calculator.operation = s;
+                et.setText("");
+            }
+            else
+            {
+                Double op2 = Double.valueOf(editText);
+                calculator.operant2 = op2;
+                calculator.operation = s;
+                String result = calculator.multiply();
+                tv.setText(result);
+
+            }
+
+        }
+        if(((Button)v).getText().toString().equals("/"))
+        {
+            if (calculator.operant1 == null)
+            {
+                if (editText.equals(""))
+                {
+                    return;
+                }
+                Double op1 = Double.valueOf(editText);
+                calculator.operant1 = op1;
+                calculator.operation = s;
+                et.setText("");
+            }
+            else
+            {
+                Double op2 = Double.valueOf(editText);
+                calculator.operant2 = op2;
+                calculator.operation = s;
+                String result = calculator.divide();
+                tv.setText(result);
+
+            }
+
+        }
+        if(((Button)v).getText().toString().equals("="))
+        {
+            if (calculator.operant1 == null && calculator.operant2 == null)
+            {
+
+            }
+            else
+            {
+                if (editText.equals(""))
+                {
+                    return;
+                }
+                Double op2 = Double.valueOf(editText);
+                calculator.operant2 = op2;
+                String result = calculator.equals();
+                tv.setText(result);
+
+            }
+
+        }
+
         if(Character.isDigit(((Button)v).getText().toString().charAt(0)))
         {
            editText = editText + s;
            et.setText(editText);
         }
-        //Toast.makeText(MainActivity.this, s ,Toast.LENGTH_LONG).show();
-        //int x = 1;
-//        int y = 1+x++;
-//        x = 1;
-//        int z = ++x+1;
-        //Toast.makeText(MainActivity.this, String.valueOf(1 + (x++)) ,Toast.LENGTH_LONG).show();
-
     }
 }
 
