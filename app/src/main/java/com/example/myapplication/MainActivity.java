@@ -2,7 +2,9 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,6 +52,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         calculator = new Calculator();
         et = findViewById(R.id.ed);
         tv = findViewById(R.id.tv);
+        pref = getPreferences(MODE_PRIVATE);
+        String saved = loadvalue();
+        if (saved != null)
+        {
+            tv.setText(saved);
+        }
 
     }
 
@@ -71,7 +79,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Calculator calculator;
     EditText et;
     TextView tv;
+    SharedPreferences pref;
 
+    void stringvalue(String value)
+    {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("result", value);
+        editor.commit();
+    }
+
+    String loadvalue()
+    {
+       return pref.getString("result", null);
+
+    }
 
     @Override
     public void onClick(View v) {
@@ -101,11 +122,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          }
          else
          {
-             Double op2 = Double.valueOf(editText);
-             calculator.operant2 = op2;
-                     calculator.operation = s;
-                     String result = calculator.plus();
-                     tv.setText(result);
+             if (editText.equals("")) {
+                 return;
+             }
+             else {
+                 Double op2 = Double.valueOf(editText);
+                 calculator.operant2 = op2;
+                 calculator.operation = s;
+                 String result = calculator.plus();
+                 String[] array= result.split("\\.");
+                 et.setText("");
+                 if (array.length>1)
+                 {
+                     if(array[1].equals("0"))
+                     {
+                         tv.setText(array[0]);
+                         return;
+                     }
+                 }
+                 tv.setText(result);
+
+             }
 
          }
 
@@ -125,12 +162,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 et.setText("");
             }
             else
+            {   if(editText.equals(""))
             {
+                return;
+            }
                 Double op2 = Double.valueOf(editText);
                 calculator.operant2 = op2;
                 calculator.operation = s;
                 String result = calculator.minus();
+                et.setText("");
+                String[] array= result.split("\\.");
+                if (array.length>1)
+                {
+                    if(array[1].equals("0"))
+                    {
+                        tv.setText(array[0]);
+                        return;
+                    }
+                }
                 tv.setText(result);
+
+
 
             }
 
@@ -150,11 +202,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             else
             {
-                Double op2 = Double.valueOf(editText);
-                calculator.operant2 = op2;
-                calculator.operation = s;
-                String result = calculator.multiply();
-                tv.setText(result);
+                if (editText.equals(""))
+                {
+                    return;
+                }
+                else {
+                    Double op2 = Double.valueOf(editText);
+                    calculator.operant2 = op2;
+                    calculator.operation = s;
+                    String result = calculator.multiply();
+                    String[] array= result.split("\\.");
+                    et.setText("");
+                    if (array.length>1)
+                    {
+                        if(array[1].equals("0"))
+                        {
+                            tv.setText(array[0]);
+                            return;
+                        }
+                    }
+                    tv.setText(result);
+
+                }
 
             }
 
@@ -174,11 +243,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             else
             {
-                Double op2 = Double.valueOf(editText);
-                calculator.operant2 = op2;
-                calculator.operation = s;
-                String result = calculator.divide();
-                tv.setText(result);
+                if (editText.equals(""))
+                {
+                    return;
+                }
+                else {
+                    Double op2 = Double.valueOf(editText);
+                    calculator.operant2 = op2;
+                    calculator.operation = s;
+                    String result = calculator.divide();
+                    String[] array= result.split("\\.");
+                    et.setText("");
+                    if (array.length>1)
+                    {
+                        if(array[1].equals("0"))
+                        {
+                            tv.setText(array[0]);
+                            return;
+                        }
+                    }
+                    tv.setText(result);
+                }
 
             }
 
@@ -191,6 +276,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             else
             {
+//                if (calculator.operant2 == null)
+//                {
+//                    Double op1 = Double.valueOf(editText);
+//                    tv.setText(String.valueOf(op1));
+//                }
                 if (editText.equals(""))
                 {
                     return;
@@ -198,7 +288,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Double op2 = Double.valueOf(editText);
                 calculator.operant2 = op2;
                 String result = calculator.equals();
+                String[] array= result.split("\\.");
+                et.setText("");
+                if (array.length>1)
+                {
+                    if(array[1].equals("0"))
+                    {
+                        tv.setText(array[0]);
+                        stringvalue(array[0]);
+                        return;
+                    }
+                }
                 tv.setText(result);
+                stringvalue(result);
 
             }
 
@@ -209,6 +311,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            editText = editText + s;
            et.setText(editText);
         }
+
     }
+
 }
 
